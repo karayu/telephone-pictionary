@@ -27,11 +27,6 @@
           {{#each colors}}
             {{> colorButton}}
           {{/each}}
-          <!-- PHASE 1
-               For each color (see the colors function in Template.draw.helpers), make a button to turn the pen that color.
-
-               Use the colorButton template for the html here.
-            -->
         </div>
       </div>
     </div>
@@ -50,14 +45,4 @@
 
 <template name="colorButton">
   <a href="#" class="btn {{this}} {{active}}" style="color: {{this}}"> &#x2B24; </a>
-
-  <!-- PHASE 1
-       Make a link with the html classes:
-       * btn
-       * the color of the button
-       * "active" if the button is active.
-
-       The link should have a style attribute that turns its color to the chosen
-    color, and some character that lets you see the chosen color (I recommend &#x2B24;)
-    -->
 </template>

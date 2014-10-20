@@ -1,9 +1,6 @@
 Session.setDefault('pencilActive', true);
 Session.setDefault('pencilSize', "medium");
-
-// PHASE 1
-// Set the default value of the session variable 'pencilColor' to "black"
-Session.setDefault("pencilColor", "black");
+Session.setDefault('pencilColor', "black");
 
 Template.draw.rendered = (function () {
   var self = this;
@@ -19,9 +16,6 @@ Template.draw.rendered = (function () {
           medium: 4,
           large: 8
         }[Session.get('pencilSize')];
-        // PHASE 1
-        // Set the canvas's color to the value of the session variable 'pencilColor'
-        // hint: canvas.freeDrawingBrush.color is the attribute in question
         self.canvas.freeDrawingBrush.color = Session.get("pencilColor");
       }
     });
@@ -33,7 +27,6 @@ Template.draw.destroyed = function () {
   if (self.autorun)
     self.autorun.stop();
 };
-
 
 Template.draw.helpers({
 
@@ -60,7 +53,6 @@ Template.draw.helpers({
   smActive: function () {
     return activeIfTrue(Session.equals('pencilSize', "small"));
   }
-
 });
 
 Template.draw.events({
@@ -86,18 +78,6 @@ Template.draw.events({
   }
 });
 
-// PHASE 1
-
-// Make a template helper on Template.colorButton that returns "active" if the
-// "pencilColor" Session variable is the same color as the button, and "" otherwise. (the word
-// "active" is because the Twitter Bootstrap uses that class to activate
-// elements in the UI)
-
-// Hints:
-// * See the activeIfTrue helper in util.js
-// * Session.equals(sessionVarName, value) will help you
-// * "this" will just be the string name of the color if you call toString() on it.
-
 Template.colorButton.helpers({
   active: function () {
     if (Session.equals('pencilColor', this.toString()))
@@ -107,12 +87,6 @@ Template.colorButton.helpers({
   }
 });
 
-// PHASE 1
-
-// Put an event handler on color buttons that sets the 'pencilColor' Session
-// variable to that color when you click them.
-
-// Remember that you can call this.toString()
 
 Template.colorButton.events({
   'click a': function () {
