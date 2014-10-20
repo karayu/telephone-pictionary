@@ -3,6 +3,7 @@ Session.setDefault('pencilSize', "medium");
 
 // PHASE 1
 // Set the default value of the session variable 'pencilColor' to "black"
+Session.setDefault("pencilColor", "black");
 
 Template.draw.rendered = (function () {
   var self = this;
@@ -21,6 +22,7 @@ Template.draw.rendered = (function () {
         // PHASE 1
         // Set the canvas's color to the value of the session variable 'pencilColor'
         // hint: canvas.freeDrawingBrush.color is the attribute in question
+        self.canvas.freeDrawingBrush.color = Session.get("pencilColor");
       }
     });
   }
@@ -38,7 +40,6 @@ Template.draw.helpers({
   colors:function () {
     return [ "black", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "white"];
   },
-
 
   pencilActive: function () {
     return activeIfTrue(Session.get('pencilActive'));
@@ -115,6 +116,7 @@ Template.colorButton.helpers({
 
 Template.colorButton.events({
   'click a': function () {
+    console.log("this is: " + this);
     Session.set('pencilColor', this.toString());
   }
 });
