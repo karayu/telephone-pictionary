@@ -4,6 +4,7 @@
 
 <body>
   <!-- PHASE 2 Add login buttons -->
+  {{> loginButtons}}
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span8 offset1">
@@ -18,17 +19,19 @@
 
 <template name="main">
   <!-- PHASE 2 Add code to display only a special message to log in if we are not yet logged in -->
-  {{#with assignment}}
-    <!-- PHASE 4 We should decide whether we're drawing, describing, or starting
-         out a phrase, based on the assignment.  Replace this with code that
-         does that.  Note that you can tell what kind of assignment it is based
-         on whether `description`, `picture` or `start` is truthy.-->
-    {{> draw}}
-  {{/with}}
-  {{#with game}}
-    <!-- This will show the results of a finished game, if we're supposed to be looking at one -->
-    {{> show}}
-  {{/with}}
+  {{#if loggedIn}}
+    {{#with assignment}}
+      <!-- PHASE 4 We should decide whether we're drawing, describing, or starting
+           out a phrase, based on the assignment.  Replace this with code that
+           does that.  Note that you can tell what kind of assignment it is based
+           on whether `description`, `picture` or `start` is truthy.-->
+      {{> draw}}
+    {{/with}}
+    {{#with game}}
+      <!-- This will show the results of a finished game, if we're supposed to be looking at one -->
+      {{> show}}
+    {{/with}}
+  {{/if}}
 </template>
 
 <template name="sidebar">
