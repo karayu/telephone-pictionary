@@ -1,5 +1,7 @@
 # Telephone-Pictionary Meteor Crash Course
 
+(Based on @sixolet's work at github.com/meteor/telephone-pictionary)
+
 Telephone-Pictionary is a game where you alternately draw phrases and describe
 drawings.
 

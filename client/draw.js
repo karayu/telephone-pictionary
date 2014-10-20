@@ -32,13 +32,18 @@ Template.draw.destroyed = function () {
     self.autorun.stop();
 };
 
-Template.draw.colors = [ "black", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "white"];
 
 Template.draw.helpers({
+
+  colors:function () {
+    return [ "black", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "white"];
+  },
+
+
   pencilActive: function () {
     return activeIfTrue(Session.get('pencilActive'));
   },
-  
+
   moveActive: function () {
     return activeIfTrue(!Session.get('pencilActive'));
   },
@@ -46,11 +51,11 @@ Template.draw.helpers({
   lgActive: function () {
     return activeIfTrue(Session.equals('pencilSize', "large"));
   },
-  
+
   medActive: function () {
     return activeIfTrue(Session.equals('pencilSize', "medium"));
   },
-  
+
   smActive: function () {
     return activeIfTrue(Session.equals('pencilSize', "small"));
   }
@@ -83,7 +88,7 @@ Template.draw.events({
 // PHASE 1
 
 // Make a template helper on Template.colorButton that returns "active" if the
-// "pencilColor" Session variable is its color, and "" otherwise. (the word
+// "pencilColor" Session variable is the same color as the button, and "" otherwise. (the word
 // "active" is because the Twitter Bootstrap uses that class to activate
 // elements in the UI)
 
