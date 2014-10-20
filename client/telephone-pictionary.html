@@ -1,0 +1,71 @@
+<head>
+  <title>Telephone Pictionary</title>
+</head>
+
+<body>
+  <!-- PHASE 2 Add login buttons -->
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span8 offset1">
+        {{> main}}
+      </div>
+      <div class="span2">
+        {{> sidebar}}
+      </div>
+    </div>
+  </div>
+</body>
+
+<template name="main">
+  <!-- PHASE 2 Add code to display only a special message to log in if we are not yet logged in -->
+  {{#with assignment}}
+    <!-- PHASE 4 We should decide whether we're drawing, describing, or starting
+         out a phrase, based on the assignment.  Replace this with code that
+         does that.  Note that you can tell what kind of assignment it is based
+         on whether `description`, `picture` or `start` is truthy.-->
+    {{> draw}}
+  {{/with}}
+  {{#with game}}
+    <!-- This will show the results of a finished game, if we're supposed to be looking at one -->
+    {{> show}}
+  {{/with}}
+</template>
+
+<template name="sidebar">
+  <!-- PHASE 2 Add code to display a sidebar if you're logged in but not otherwise -->
+  <ul class="nav nav-pills nav-stacked">
+    <li class="{{playActive}}"><a class="playGame">Play</a></li>
+    <li class="nav-header">Your recent games:</li>
+    {{#each recentGames}}
+    <li class="{{gameActive}}"><a class="selectGame" id="{{_id}}">{{firstPhrase}}</a></li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name="show">
+  <div class="show container-fluid">
+    {{#each moves}}
+      {{#with move}}
+        {{> showMove}}
+      {{/with}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="showMove">
+  <div class="row-fluid">
+    {{#if picture}}
+      <!--{{#constant}}-->
+        <div class="canvas">
+          <canvas id="{{_id}}"></canvas>
+        </div>
+      <!--{{/constant}}-->
+    {{else}}
+    <h3>{{answer}}</h3>
+    {{/if}}
+  </div>
+</template>
+
+<template name="timer">
+  <h1 class="text-warning">{{timeLeft}}</h1>
+</template>
