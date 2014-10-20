@@ -54,6 +54,7 @@ Template.draw.helpers({
   smActive: function () {
     return activeIfTrue(Session.equals('pencilSize', "small"));
   }
+
 });
 
 Template.draw.events({
@@ -91,12 +92,27 @@ Template.draw.events({
 // * Session.equals(sessionVarName, value) will help you
 // * "this" will just be the string name of the color if you call toString() on it.
 
+Template.colorButton.helpers({
+  active: function () {
+    if (Session.equals('pencilColor', this.toString()))
+      return 'active';
+
+    return '';
+  }
+});
+
 // PHASE 1
 
 // Put an event handler on color buttons that sets the 'pencilColor' Session
 // variable to that color when you click them.
 
 // Remember that you can call this.toString()
+
+Template.colorButton.events({
+  'click a': function () {
+    Session.set('pencilColor', this.toString());
+  }
+});
 
 
 // PHASE 5
