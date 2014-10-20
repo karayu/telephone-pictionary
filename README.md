@@ -101,7 +101,7 @@ At the command prompt in your application directory, type
 
 (you can instead add `accounts-facebook`, or `accounts-google` if you like).
 
-At this point, you can add login support just by adding `{{loginButtons}}` to
+At this point, you can add login support just by adding `{{> loginButtons}}` to
 the `telephone-pictionary.html` file.
 
 We'd also like to hide most of the application's UI if the user is not logged
