@@ -138,9 +138,9 @@ The Mongo operations of note are:
 In phase 3, we'll be doing some database interaction to figure out what our user
 should draw or describe, and use Meteor's remote procedure call api to inform
 the client of this assignment.  In `assignments.js`, fill in the part of the
-`getAssignment` RPC as indicated.  Then, in `main.js`, fill in the parts
-necessary to actually make the RPC to get an assignment when needed, and to
-display the assignment in the main template.
+`getAssignment` RPC as indicated. (Hint: Look at model.js to see what our Games collection looks like.
+Then, in `main.js`, fill in the parts necessary to actually make the RPC to get 
+an assignment when needed, and to display the assignment in the main template.
 
 ## Phase 4
 
