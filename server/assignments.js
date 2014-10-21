@@ -28,32 +28,27 @@ Meteor.methods({
         _id: Random.id()
       };
 
-      Moves.insert(move);
-    }
-
-    var game = Games.findOne({
-      done: false,
-      activeMove: null
-      //participants: {$ne: Meteor.userId()}
-    });
-
-    if (game) 
-      move.previous = game.moves[game.moves.length - 1];
-    else
-      game = Games.insert({
-        _id: Random.id(),
+      var game = Games.findOne({
         done: false,
-        activeMove: null,
-        participants: [],
-        moves: []
+        activeMove: null
+        //participants: {$ne: Meteor.userId()}
       });
 
-    move.game = game._id;
-
-    Moves.update({_id: move._id}, {$set: {game: move.game, previous: move.previous}});
-    Games.update({_id: game._id}, {$set: {activeMove: move._id}});
-    
-
+      if (game) {
+        move.previous = game.moves[game.moves.length - 1];
+        move.game = game._id;
+      } else {
+        move.game = Games.insert({
+          _id: Random.id(),
+          done: false,
+          activeMove: null,
+          participants: [],
+          moves: []
+        });
+      }
+      Moves.insert(move);
+      Games.update({_id: move.game}, {$set: {activeMove: move._id}});
+    }
     // Here, we do some work to make it easier for the client to make decisions
     // based on their assigned move -- we augment the move object with the
     // answer from the previous move.  Note that this doesn't affect what's in
@@ -81,7 +76,6 @@ Meteor.methods({
     check(assignmentId, String);
     // Do more answer validation.
     var assignment = Moves.findOne(assignmentId);
-    console.log("assignment is: " + JSON.stringify(assignment));
     //Extra credit: check to make sure that the assignment hasn't expired yet. 
     //i.e. current date is before the expiration date. 
     //If this is not the case, throw a 403 error
@@ -93,9 +87,7 @@ Meteor.methods({
       check(answer, String);
     Moves.update(assignmentId, {$set: {answer: answer}});
     // Find the relevant game
-    console.log("assignment.game is: " + assignment.game);
     var game = Games.findOne(assignment.game);
-    console.log("game is: " + JSON.stringify(game));
     // Set the game to have no activeMove, and to be done if it has enough moves.
     var gameSetter = {activeMove: null};
     if (game.moves.length >= GAME_LENGTH - 1)

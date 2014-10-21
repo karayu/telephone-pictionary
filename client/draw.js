@@ -79,8 +79,6 @@ Template.draw.events({
   'submit, click #done': function (e, templ) {
     if (templ.canvas)
       submitAnswer(templ.canvas.toObject());
-    else
-      console.log("there was no canvas");
   }
 });
 
@@ -93,10 +91,8 @@ Template.colorButton.helpers({
   }
 });
 
-
 Template.colorButton.events({
   'click a': function () {
-    console.log("this is: " + this);
     Session.set('pencilColor', this.toString());
   }
 });
