@@ -29,6 +29,12 @@ Meteor.methods({
       };
       // PHASE 3
 
+      var game = Games.findOne({
+        done: false,
+        activeMove: null
+        //participants: {$nin: [Meteor.userId()]}
+      });
+
       // Use Mongo to find a game to tack this move on to.  The criteria are:
       // * The game is not done
       // * The game has no active move.
@@ -38,6 +44,17 @@ Meteor.methods({
       // If we found zaa game, set up the `previous` field on the move with the
       // previous move in that game.
 
+      if (game) 
+        move.previous = game.moves[game.moves - 1];
+      else
+        game = Games.insert({
+          _id: Random.id(),
+          done: false,
+          activeMove: null,
+          participants: [],
+          moves: []
+        });
+
       // If we haven't found a game, set one up and insert it into the Games
       // collection. (hint: It's not done, its `activeMove` is null, has no
       // participants yet, and no moves yet)
@@ -45,6 +62,7 @@ Meteor.methods({
       // Either way, set the `game` field on the move to be the _id of the game
       // it belongs to.
 
+      move.game = game._id;
 
       // Now we insert the move to the moves table.
       Moves.insert(move);
@@ -52,7 +70,9 @@ Meteor.methods({
       // PHASE 3
 
       // Okay, now let's set the `activeMove` of our game to our new move, using
-      // the update() method on the Games collection.
+      // the update() method on the Games collection. 
+      Games.update({_id: game._id}, {$set: {activeMove: move._id}});
+    
     }
 
     // Here, we do some work to make it easier for the client to make decisions
