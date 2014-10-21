@@ -20,7 +20,7 @@ Template.draw.rendered = (function () {
         }[Session.get('pencilSize')];
         // PHASE 1
         // Set the canvas's color to the value of the session variable 'pencilColor'
-        // hint: canvas.freeDrawingBrush.color is the attribute in question
+        // hint: self.canvas.freeDrawingBrush.color is the attribute in question
       }
     });
   }

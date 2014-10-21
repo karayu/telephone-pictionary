@@ -1,11 +1,5 @@
 Session.setDefault("assignment", null);
 
-// Define a helper function that will be truthy if we're logged in.
-Template.main.loggedIn = Template.sidebar.loggedIn = function () {
-  return false;
-  // PHASE 2
-  // Return something truthy if we're logged in.
-};
 
 Template.main.helpers({
   assignment: function () {
@@ -22,6 +16,15 @@ Template.main.helpers({
     if (Session.get("viewingGame"))
       return Games.findOne(Session.get("viewingGame"));
     return null;
+  },
+
+  // Define a helper function that will be truthy if we're logged in.
+  loggedIn: function() {
+
+    return false;
+    // PHASE 2
+    // Return something truthy if we're logged in.
+
   }
 });
 
@@ -62,7 +65,14 @@ Template.sidebar.helpers({
 
   gameActive: function () {
     return activeIfTrue(Session.equals("viewingGame", this._id));
-  }, 
+  },
+
+  // Define a helper function that will be truthy if we're logged in.  
+  loggedIn: function() {
+    return false;
+    // PHASE 2
+    // Return something truthy if we're logged in.
+  }
 
   playActive: function () {
     return activeIfTrue(!Session.get("viewingGame"));
