@@ -37,6 +37,10 @@ in advance of getting down and dirty with it very soon.
 
 ## Phase 1
 
+The task for phase 1 is to add color support to our drawing program. The user will be able 
+to choose a color to draw in. You'll be working in `client/draw.js` and `client/draw.html`.  
+Replace each of the PHASE 1 comments with the appropriate Spacebars and Javascript code.
+
 Here you'll be getting used to Meteor's reactive templating system.  That sounds
 fancy and complicated, but what it really means is that Meteor does its best to
 tell when the information substituted into your HTML templates changes, and
@@ -80,10 +84,6 @@ Meteor supplies certain information sources that will inform template helpers
 they need to rerender when the data source is changed.  The simplest of these is
 `Session`.  To get a `Session` variable, use `Session.get("variableName")`, and
 to set one, use `Session.set("variableName", value)`.
-
-The task for phase 1 is to add color support to our drawing program.  You'll be
-working in `client/draw.js` and `client/draw.html`.  Replace each of the PHASE 1
-comments with the appropriate Handlebars and Javascript code.
 
 Note: In Meteor, you rarely want to supply `href` attributes to links, because
 clicking them reloads your page.  You want to directly process click events on
@@ -138,9 +138,9 @@ The Mongo operations of note are:
 In phase 3, we'll be doing some database interaction to figure out what our user
 should draw or describe, and use Meteor's remote procedure call api to inform
 the client of this assignment.  In `assignments.js`, fill in the part of the
-`getAssignment` RPC as indicated.  Then, in `main.js`, fill in the parts
-necessary to actually make the RPC to get an assignment when needed, and to
-display the assignment in the main template.
+`getAssignment` RPC as indicated. (Hint: Look at model.js to see what our Games collection looks like.)
+Then, in `main.js`, fill in the parts necessary to actually make the RPC to get 
+an assignment when needed, and to display the assignment in the main template.
 
 ## Phase 4
 

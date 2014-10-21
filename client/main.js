@@ -61,7 +61,14 @@ Template.sidebar.helpers({
 
   gameActive: function () {
     return activeIfTrue(Session.equals("viewingGame", this._id));
-  }, 
+  },
+
+  // Define a helper function that will be truthy if we're logged in.  
+  loggedIn: function() {
+    return false;
+    // PHASE 2
+    // Return something truthy if we're logged in.
+  }
 
   // Define a helper function that will be truthy if we're logged in.
   loggedIn: function () {
