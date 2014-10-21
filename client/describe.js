@@ -30,7 +30,11 @@ Template.describe.events({
     // PHASE 5
     // use the template to find the '#phrase' input element
     // if it has a value, submit that.
-
+    var answer = $('#phrase').val();
+    if (answer) {
+      submitAnswer(answer);
+      $('#phrase').empty();
+    }
     // note: check the submitAnswer helper function in main.js
   }
 });

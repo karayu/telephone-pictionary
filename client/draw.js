@@ -75,6 +75,12 @@ Template.draw.events({
     if (templ.canvas && templ.canvas.getActiveObject()) {
       templ.canvas.remove(templ.canvas.getActiveObject());
     }
+  },
+  'submit, click #done': function (e, templ) {
+    if (templ.canvas)
+      submitAnswer(templ.canvas.toObject());
+    else
+      console.log("there was no canvas");
   }
 });
 

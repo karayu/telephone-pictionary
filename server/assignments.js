@@ -20,37 +20,39 @@ Meteor.methods({
     // * Expiring in 100 seconds
     // * With an answer of null so far
     // * Create an _id for it explicitly (why?)
+    // * Extra credit: have an 'expires field that is equal to 100 seconds form now
     if (!move) {
       move = {
         assignee: Meteor.userId(),
-        expires: new Date(new Date().valueOf() + 100*1000),
         answer: null,
         _id: Random.id()
       };
 
-      var game = Games.findOne({
+      Moves.insert(move);
+    }
+
+    var game = Games.findOne({
+      done: false,
+      activeMove: null
+      //participants: {$ne: Meteor.userId()}
+    });
+
+    if (game) 
+      move.previous = game.moves[game.moves.length - 1];
+    else
+      game = Games.insert({
+        _id: Random.id(),
         done: false,
-        activeMove: null
-        //participants: {$ne: Meteor.userId()}
+        activeMove: null,
+        participants: [],
+        moves: []
       });
 
-      if (game) 
-        move.previous = game.moves[game.moves.length - 1];
-      else
-        game = Games.insert({
-          _id: Random.id(),
-          done: false,
-          activeMove: null,
-          participants: [],
-          moves: []
-        });
+    move.game = game._id;
 
-      move.game = game._id;
-
-      // Now we insert the move to the moves table.
-      Moves.insert(move);
-      Games.update({_id: game._id}, {$set: {activeMove: move._id}});
-    }
+    Moves.update({_id: move._id}, {$set: {game: move.game, previous: move.previous}});
+    Games.update({_id: game._id}, {$set: {activeMove: move._id}});
+    
 
     // Here, we do some work to make it easier for the client to make decisions
     // based on their assigned move -- we augment the move object with the
@@ -79,8 +81,11 @@ Meteor.methods({
     check(assignmentId, String);
     // Do more answer validation.
     var assignment = Moves.findOne(assignmentId);
-    if (assignment.expires.valueOf() < new Date().valueOf())
-      throw new Meteor.Error(403, "Assignment has expired");
+    console.log("assignment is: " + JSON.stringify(assignment));
+    //Extra credit: check to make sure that the assignment hasn't expired yet. 
+    //i.e. current date is before the expiration date. 
+    //If this is not the case, throw a 403 error
+
     var previous = Moves.findOne(assignment.previous);
     if (previous && typeof previous.answer === 'string')
       check(answer, Object);
@@ -88,7 +93,9 @@ Meteor.methods({
       check(answer, String);
     Moves.update(assignmentId, {$set: {answer: answer}});
     // Find the relevant game
+    console.log("assignment.game is: " + assignment.game);
     var game = Games.findOne(assignment.game);
+    console.log("game is: " + JSON.stringify(game));
     // Set the game to have no activeMove, and to be done if it has enough moves.
     var gameSetter = {activeMove: null};
     if (game.moves.length >= GAME_LENGTH - 1)

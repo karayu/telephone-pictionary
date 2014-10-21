@@ -10,4 +10,5 @@ accounts-base
 bootstrap
 accounts-ui
 accounts-password
+jquery
 
