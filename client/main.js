@@ -1,14 +1,5 @@
 Session.setDefault("assignment", null);
 
-// Define a helper function that will be truthy if we're logged in.
-Template.main.loggedIn = Template.sidebar.loggedIn = function () {
-  // PHASE 2
-  // Return something truthy if we're logged in.
-  if (Meteor.userId())
-    return true;
-  return false;
-};
-
 Template.main.helpers({
   assignment: function () {
     // PHASE 3
@@ -24,6 +15,12 @@ Template.main.helpers({
     if (Session.get("viewingGame"))
       return Games.findOne(Session.get("viewingGame"));
     return null;
+  }, 
+  // Define a helper function that will be truthy if we're logged in.
+  loggedIn: function () {
+    if (Meteor.userId())
+      return true;
+    return false;
   }
 });
 
@@ -65,6 +62,13 @@ Template.sidebar.helpers({
   gameActive: function () {
     return activeIfTrue(Session.equals("viewingGame", this._id));
   }, 
+
+  // Define a helper function that will be truthy if we're logged in.
+  loggedIn: function () {
+    if (Meteor.userId())
+      return true;
+    return false;
+  },
 
   playActive: function () {
     return activeIfTrue(!Session.get("viewingGame"));
