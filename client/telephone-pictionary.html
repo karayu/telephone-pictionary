@@ -19,10 +19,6 @@
 <template name="main">
   {{#if loggedIn}}
     {{#with assignment}}
-      <!-- PHASE 4 We should decide whether we're drawing, describing, or starting
-           out a phrase, based on the assignment.  Replace this with code that
-           does that.  Note that you can tell what kind of assignment it is based
-           on whether `description`, `picture` or `start` is truthy.-->
       {{#if start}}
         {{> start}}
       {{/if}}
