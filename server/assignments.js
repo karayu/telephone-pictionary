@@ -32,7 +32,7 @@ Meteor.methods({
       var game = Games.findOne({
         done: false,
         activeMove: null
-        //participants: {$nin: [Meteor.userId()]}
+        //participants: {$ne: Meteor.userId()}
       });
 
       // Use Mongo to find a game to tack this move on to.  The criteria are:
@@ -45,7 +45,7 @@ Meteor.methods({
       // previous move in that game.
 
       if (game) 
-        move.previous = game.moves[game.moves - 1];
+        move.previous = game.moves[game.moves.length - 1];
       else
         game = Games.insert({
           _id: Random.id(),

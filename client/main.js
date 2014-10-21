@@ -8,7 +8,9 @@ Template.main.helpers({
     // game-viewing mode, the 'viewingGame' Session variable is truthy).
 
     // For now, return a dummy.
-    return { description: "Lorem ipsum dolor sic amet"};
+    if (!Session.get("viewingGame"))
+      return Session.get("assignment");
+    return null;
   },
   // return the game we're viewing, if any.
   game: function () {
@@ -35,6 +37,11 @@ Meteor.autorun(function () {
   // variable.
 
   // Set the "assignment" session variable to the result.
+  if (Meteor.userId() && !Session.get("viewingGame") && !Session.get("assignment")) {
+    Meteor.call("getAssignment", function (err, res) {
+      Session.set("assignment", res);
+    });
+  }
 });
 
 submitAnswer = function (answer) {
