@@ -34,22 +34,21 @@ Meteor.methods({
         //participants: {$ne: Meteor.userId()}
       });
 
-      if (game) 
+      if (game) {
         move.previous = game.moves[game.moves.length - 1];
-      else
-        game = Games.insert({
+        move.game = game._id;
+      } else {
+        move.game = Games.insert({
           _id: Random.id(),
           done: false,
           activeMove: null,
           participants: [],
           moves: []
         });
-
-      move.game = game._id;
-
+      }
       // Now we insert the move to the moves table.
       Moves.insert(move);
-      Games.update({_id: game._id}, {$set: {activeMove: move._id}});
+      Games.update({_id: move.game}, {$set: {activeMove: move._id}});
     }
 
     // Here, we do some work to make it easier for the client to make decisions
