@@ -72,7 +72,7 @@ Template.sidebar.helpers({
     return false;
     // PHASE 2
     // Return something truthy if we're logged in.
-  }
+  },
 
   playActive: function () {
     return activeIfTrue(!Session.get("viewingGame"));
