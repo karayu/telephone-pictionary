@@ -159,6 +159,10 @@ template before.
 
 ## Phase 5
 
+At the command prompt in your application directory, type
+
+    meteor add jquery
+
 We have assignments displaying.  Now let's provide the answers to them.  In
 `start.js`, `describe.js`, and `draw.js`, provide an event handler that will
 gather the answer (use the `find` method on the template object to get a
