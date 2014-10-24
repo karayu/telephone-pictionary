@@ -25,17 +25,17 @@
         </div>
         <div class="btn-group">
           {{#each colors}}
-            {{> colorButton}}
+          {{> colorButton}}
           {{/each}}
         </div>
       </div>
     </div>
     <div class="row-fluid">
-      <!--{{#constant}}-->
+      {{#constant}}
       <div class="canvas">
         <canvas id="pictionary"></canvas>
       </div>
-      <!--{{/constant}}-->
+      {{/constant}}
     </div>
     <div class="row-fluid">
       <a class="btn btn-large" id="done">Done!</a>
@@ -44,5 +44,5 @@
 </template>
 
 <template name="colorButton">
-  <a href="#" class="btn {{this}} {{active}}" style="color: {{this}}"> &#x2B24; </a>
+  <a class="btn {{this}} {{active}}" style="color: {{this}}">&#x2B24;</a>
 </template>

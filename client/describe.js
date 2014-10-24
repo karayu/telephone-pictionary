@@ -27,14 +27,11 @@ Template.describe.events({
   'submit, click #done': function (evt, templ) {
     evt.stopPropagation();
     evt.preventDefault();
-    // PHASE 5
-    // use the template to find the '#phrase' input element
-    // if it has a value, submit that.
-    var answer = $('#phrase').val();
+    var answer = templ.find('#phrase').value;
+    console.log(templ.find("#phrase").value);
     if (answer) {
+      templ.find('#phrase').value = "";
       submitAnswer(answer);
-      $('#phrase').empty();
     }
-    // note: check the submitAnswer helper function in main.js
   }
 });

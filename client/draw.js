@@ -16,10 +16,11 @@ Template.draw.rendered = (function () {
           medium: 4,
           large: 8
         }[Session.get('pencilSize')];
-        self.canvas.freeDrawingBrush.color = Session.get("pencilColor");
+        self.canvas.freeDrawingBrush.color = Session.get('pencilColor');
       }
     });
   }
+  CANVAS = self.canvas;
 });
 
 Template.draw.destroyed = function () {
@@ -28,32 +29,23 @@ Template.draw.destroyed = function () {
     self.autorun.stop();
 };
 
-Template.draw.helpers({
+Template.draw.colors = [ "black", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "white"];
 
-  colors:function () {
-    return [ "black", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "white"];
-  },
-
-  pencilActive: function () {
-    return activeIfTrue(Session.get('pencilActive'));
-  },
-
-  moveActive: function () {
-    return activeIfTrue(!Session.get('pencilActive'));
-  },
-
-  lgActive: function () {
-    return activeIfTrue(Session.equals('pencilSize', "large"));
-  },
-
-  medActive: function () {
-    return activeIfTrue(Session.equals('pencilSize', "medium"));
-  },
-
-  smActive: function () {
-    return activeIfTrue(Session.equals('pencilSize', "small"));
-  }
-});
+Template.draw.pencilActive = function () {
+  return activeIfTrue(Session.get('pencilActive'));
+};
+Template.draw.moveActive = function () {
+  return activeIfTrue(!Session.get('pencilActive'));
+};
+Template.draw.lgActive = function () {
+  return activeIfTrue(Session.equals('pencilSize', "large"));
+};
+Template.draw.medActive = function () {
+  return activeIfTrue(Session.equals('pencilSize', "medium"));
+};
+Template.draw.smActive = function () {
+  return activeIfTrue(Session.equals('pencilSize', "small"));
+};
 
 Template.draw.events({
   'click .pencil': function () {
@@ -75,32 +67,23 @@ Template.draw.events({
     if (templ.canvas && templ.canvas.getActiveObject()) {
       templ.canvas.remove(templ.canvas.getActiveObject());
     }
-  },
-  'submit, click #done': function (e, templ) {
-    if (templ.canvas)
-      submitAnswer(templ.canvas.toObject());
   }
 });
 
-Template.colorButton.helpers({
-  active: function () {
-    if (Session.equals('pencilColor', this.toString()))
-      return 'active';
-
-    return '';
-  }
-});
+Template.colorButton.active = function () {
+  return activeIfTrue(Session.equals("pencilColor", this.toString()));
+};
 
 Template.colorButton.events({
-  'click a': function () {
+  'click' : function () {
     Session.set('pencilColor', this.toString());
   }
 });
 
-
-// PHASE 5
-
-// When we click #done on drawing, submit the canvas's object representation
-// (call toObject() on it)
-
-// note: see the submitAnswer helper in main.js
+Template.draw.events({
+  'submit, click #done': function (evt, templ) {
+    if (templ.canvas) {
+      submitAnswer(templ.canvas.toObject());
+    }
+  }
+});

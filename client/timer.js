@@ -1,21 +1,14 @@
 var timerDep = new Deps.Dependency();
 
-Template.timer.helpers({
-	timeLeft: function () {
-	  return "TIMER";
-	  // PHASE 6
-	  // Depend on the timer dependency so we rerun whenever it's changed.
-	  // Calculate the time in seconds left on the current assignment.
-
-	  // If the current assignment has expired, set the 'assignment' session
-	  // variable back to null.
-
-	  // Return the time left.
-	}
-});
-
-	
+Template.timer.timeLeft = function () {
+  timerDep.depend();
+  var assignment = Session.get("assignment");
+  var left = Math.ceil( (assignment.expires.valueOf() - new Date().valueOf())/1000);
+  if (left <= 0)
+    Session.set("assignment", null);
+  return left;
+};
 
 Meteor.setInterval(function () {
-  // Tell the dependency that it has changed.
+  timerDep.changed();
 }, 500);
