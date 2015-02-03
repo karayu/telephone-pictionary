@@ -29,40 +29,53 @@ Template.draw.destroyed = function () {
     self.autorun.stop();
 };
 
-Template.draw.colors = [ "black", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "white"];
+Template.draw.helpers({
+  colors: function () {
+    return [ "black", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "white"];
+  },
 
-Template.draw.pencilActive = function () {
-  return activeIfTrue(Session.get('pencilActive'));
-};
-Template.draw.moveActive = function () {
-  return activeIfTrue(!Session.get('pencilActive'));
-};
-Template.draw.lgActive = function () {
-  return activeIfTrue(Session.equals('pencilSize', "large"));
-};
-Template.draw.medActive = function () {
-  return activeIfTrue(Session.equals('pencilSize', "medium"));
-};
-Template.draw.smActive = function () {
-  return activeIfTrue(Session.equals('pencilSize', "small"));
-};
+  pencilActive: function () {
+    return activeIfTrue(Session.get('pencilActive'));
+  }, 
+
+  moveActive: function () {
+    return activeIfTrue(!Session.get('pencilActive'));
+  }, 
+
+  lgActive: function () {
+    return activeIfTrue(Session.equals('pencilSize', "large"));
+  },
+
+  medActive: function () {
+    return activeIfTrue(Session.equals('pencilSize', "medium"));
+  }, 
+
+  smActive: function () {
+    return activeIfTrue(Session.equals('pencilSize', "small"));
+  }
+});
 
 Template.draw.events({
   'click .pencil': function () {
     Session.set('pencilActive', true);
   },
+  
   'click .move': function () {
     Session.set('pencilActive', false);
   },
+
   'click .large': function () {
     Session.set('pencilSize', "large");
   },
+
   'click .medium': function () {
     Session.set('pencilSize', "medium");
   },
+
   'click .small': function () {
     Session.set('pencilSize', "small");
   },
+
   'click .remove': function (evt, templ) {
     if (templ.canvas && templ.canvas.getActiveObject()) {
       templ.canvas.remove(templ.canvas.getActiveObject());
@@ -70,9 +83,11 @@ Template.draw.events({
   }
 });
 
-Template.colorButton.active = function () {
-  return activeIfTrue(Session.equals("pencilColor", this.toString()));
-};
+Template.colorButton.helpers({
+  active: function () {
+    return activeIfTrue(Session.equals("pencilColor", this.toString()));
+  }
+});
 
 Template.colorButton.events({
   'click' : function () {

@@ -8,21 +8,23 @@ Meteor.autorun(function () {
   });
 });
 
-Template.main.loggedIn = Template.sidebar.loggedIn = function () {
-  return Meteor.userId();
-};
+Template.main.helpers({
+  loggedIn: function () {
+    return Meteor.userId();
+  },
 
-Template.main.assignment = function () {
-  if (!Session.get("viewingGame"))
-    return Session.get('assignment');
-  return null;
-};
+  assignment: function () {
+    if (!Session.get("viewingGame"))
+      return Session.get('assignment');
+    return null;
+  },
 
-Template.main.game = function () {
-  if (Session.get("viewingGame"))
-    return Games.findOne(Session.get("viewingGame"));
-  return null;
-};
+  game: function () {
+    if (Session.get("viewingGame"))
+      return Games.findOne(Session.get("viewingGame"));
+    return null;
+  }
+});
 
 Meteor.autorun(function () {
   if (Meteor.userId() &&
@@ -43,18 +45,31 @@ submitAnswer = function (answer) {
 };
 
 
-Template.sidebar.recentGames = function () {
-  return Games.find({
-    done: true,
-    participants: Meteor.userId()
-  });
-};
+Template.sidebar.helpers({
+  loggedIn: function () {
+    return Meteor.userId();
+  },
 
+  recentGames: function () {
+    return Games.find({
+      done: true,
+      participants: Meteor.userId()
+    });
+  },
 
-Template.sidebar.firstPhrase = function () {
-  var move = Moves.findOne(this.moves[0]);
-  return move && move.answer;
-};
+  firstPhrase: function () {
+    var move = Moves.findOne(this.moves[0]);
+    return move && move.answer;
+  },
+
+  gameActive: function () {
+    return activeIfTrue(Session.equals("viewingGame", this._id));
+  },
+
+  playActive: function () {
+    return activeIfTrue(!Session.get("viewingGame"));
+  }
+});
 
 Template.sidebar.events({
   'click .selectGame': function (evt) {
@@ -65,10 +80,4 @@ Template.sidebar.events({
   }
 });
 
-Template.sidebar.gameActive = function () {
-  return activeIfTrue(Session.equals("viewingGame", this._id));
-};
 
-Template.sidebar.playActive = function () {
-  return activeIfTrue(!Session.get("viewingGame"));
-};

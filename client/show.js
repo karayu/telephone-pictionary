@@ -1,14 +1,18 @@
-Template.show.move = function () {
-  return Moves.findOne(this.toString());
-};
+Template.show.helpers({
+  move: function () {
+    return Moves.findOne(this.toString());
+  }, 
+  
+  moves: function () {
+    return this.moves;
+  }
+});
 
-Template.show.moves = function () {
-  return this.moves;
-};
-
-Template.showMove.picture = function () {
-  return typeof this.answer === "object";
-};
+Template.showMove.helpers({
+  picture: function () {
+    return typeof this.answer === "object";
+  }
+});
 
 Template.showMove.rendered = function () {
   var self = this;

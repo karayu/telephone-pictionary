@@ -18,7 +18,7 @@ Meteor.methods({
       var game = Games.findOne({
         done: false,
         activeMove: null,
-        participants: {$ne: Meteor.userId()}
+        //participants: {$ne: Meteor.userId()}
       });
       if (game) {
         move.previous = game.moves[game.moves.length-1];
