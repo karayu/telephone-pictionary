@@ -1,4 +1,4 @@
-var timerDep = new Deps.Dependency();
+var timerDep = new Tracker.Dependency();
 
 Template.timer.helpers({
 	timeLeft: function () {

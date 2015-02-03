@@ -8,9 +8,6 @@ Meteor.methods({
       throw new Meteor.Error(403, "Must be logged in to play");
 
     // Use mongo to try and find a move we're already assigned.
-
-    // PHASE 6
-    // Modify this to require that the move hasn't expired.
     var move = Moves.findOne({
       assignee: Meteor.userId(),
       answer: null
